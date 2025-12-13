@@ -1,11 +1,12 @@
 import { logout } from '../services/authService.js';
 import dashboardHeader from '../components/dashboardHeader.js';
+import store from '../state/index.js';
 
 export default class Settings {
-    constructor(user) {
+    constructor() {
         this.docTitle = "Ajustes";
-        this.header = new dashboardHeader(user);
-        this.user = user;
+        this.user = store.state.user;
+        this.header = new dashboardHeader();
         this.theme = localStorage.getItem('theme') || 'dark';
     }
 
@@ -51,7 +52,6 @@ export default class Settings {
     }
 
     initEvents() {
-
         try {
             const btnLogout = document.querySelector("#logoutBtn");
             const body = document.body;
@@ -63,8 +63,6 @@ export default class Settings {
                 const logo = document.querySelector(".logo img");
                 (logo) ? logo.src = `/assets/logos/${theme}-theme/enterlist-imagotipo.png` : "";
                 body.setAttribute('data-theme', theme);
-
-
                 localStorage.setItem('theme', theme);
             })
 
@@ -91,7 +89,7 @@ export default class Settings {
     initialize() {
         const d = document;
         d.querySelector("title").innerText = this.docTitle;
-        d.querySelector('header').innerHTML = this.header.render(this.user);
+        d.querySelector('header').innerHTML = this.header.render();
         this.header.initEvents();
         d.querySelector("#app").innerHTML = this.render();
         this.initEvents();

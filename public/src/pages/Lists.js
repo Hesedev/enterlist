@@ -2,14 +2,15 @@ import EmptyScreen from '../components/EmptyScreen.js';
 import dashboardHeader from '../components/dashboardHeader.js';
 import List from '../components/List.js';
 import Lista from '../models/Lista.js';
+import store from '../state/index.js';
 
 export default class Lists {
-    constructor(user) {
+    constructor() {
         this.docTitle = "Mis listas";
-        this.header = new dashboardHeader(user);
+        this.user = store.state.user;
+        this.header = new dashboardHeader();
         this.listComponent = new List();
         this.emptyscreen = new EmptyScreen();
-        this.user = user;
     }
 
     async initialize() {
@@ -17,7 +18,7 @@ export default class Lists {
         this.lists = unorderedLists.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
         const d = document;
 
-        const header = this.header.render(this.user);
+        const header = this.header.render();
         d.querySelector('header').innerHTML = header;
         this.header.initEvents();
 
@@ -107,10 +108,6 @@ export default class Lists {
             const filter = Array.from(allFilterBy).find(c => c.checked)?.value || "todo";
             const order = Array.from(allOrderBy).find(c => c.checked)?.value || "fecha-creacion";
             const direction = Array.from(allDirections).find(c => c.checked)?.value || "desc";
-            /* 
-                        console.log(`Filtrar por: ${filter}`);
-                        console.log(`Ordenar por: ${order}`);
-                        console.log(`Dirección: ${direction}`); */
 
             const filterParams = [
                 { key: "filter", value: filter },

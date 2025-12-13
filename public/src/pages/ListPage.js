@@ -5,11 +5,11 @@ import listPageHeader from '../components/ListPageHeader.js';
 import Lista from '../models/Lista.js';
 import { routes } from '../router/routes.js';
 import { router } from '../router/router.js';
-import { Firestore, FieldValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import store from '../state/index.js';
 
 export default class ListPage {
-    constructor(user, params) {
-        this.user = user;
+    constructor(params) {
+        this.user = store.state.user;
         this.listId = params.listId;
         this.itemComponent = new Item();
         this.emptyscreen = new EmptyScreen();

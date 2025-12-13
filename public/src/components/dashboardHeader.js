@@ -1,14 +1,14 @@
-import { router } from '../router/router.js';
-import { routes } from '../router/routes.js';
+import store from '../state/index.js';
 import ListForm from "../components/ListForm.js";
 
 export default class dashboardHeader {
-    constructor(user) {
+    constructor() {
         this.path = window.location.pathname;
-        this.listForm = new ListForm(user);
+        this.user = store.state.user;
+        this.listForm = new ListForm(this.user);
     }
 
-    render(user) {
+    render() {
         return `
             <div class="nav container">
                 <!--Logo-->
@@ -38,7 +38,7 @@ export default class dashboardHeader {
                         <span class="nav-link-title">Listas</span>
                     </a>
                     <a href="/settings" data-link class="nav-link">
-                        <img src="${user.photoURL}" alt="Profile Picture" class="profile-picture"
+                        <img src="${this.user.photoURL}" alt="Profile Picture" class="profile-picture"
                             loading="lazy">
                         <span class="nav-link-title">Tú</span>
                     </a>

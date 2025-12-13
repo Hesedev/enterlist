@@ -1,3 +1,4 @@
+import store from '../state/index.js';
 import Carousel from '../components/Carousel.js';
 import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs';
 import EmptyScreen from '../components/EmptyScreen.js';
@@ -5,12 +6,12 @@ import dashboardHeader from '../components/dashboardHeader.js';
 import Lista from '../models/Lista.js';
 
 export default class Dashboard {
-    constructor(user) {
+    constructor() {
         this.docTitle = "Enterlist";
-        this.header = new dashboardHeader(user);
+        this.user = store.state.user;
+        this.header = new dashboardHeader();
         this.carousel = new Carousel();
         this.emptyscreen = new EmptyScreen();
-        this.user = user;
     }
 
     async initialize() {
@@ -19,7 +20,7 @@ export default class Dashboard {
 
         const d = document;
         d.querySelector("title").innerText = this.docTitle;
-        d.querySelector('header').innerHTML = this.header.render(this.user);
+        d.querySelector('header').innerHTML = this.header.render();
         this.header.initEvents();
         d.querySelector("#app").innerHTML = this.render();
         this.initEvents();
@@ -46,11 +47,9 @@ export default class Dashboard {
         } else {
             return this.emptyscreen.render("inbox", "Marca listas como destacadas para verlas en la página principal.");
         }
-
     }
 
     initEvents() {
-        // swiper con imagenes 2:3
         const swiper1 = new Swiper(".carousel-content-2-3", {
             slidesPerView: 1,
             spaceBetween: 10,
@@ -90,7 +89,6 @@ export default class Dashboard {
             },
         });
 
-        // swiper con imagenes 1:1
         const swiper2 = new Swiper(".carousel-content-1-1", {
             slidesPerView: 1,
             spaceBetween: 10,
@@ -129,7 +127,6 @@ export default class Dashboard {
                 },
             },
         });
-        // swiper con imagenes 16:9
         const swiper3 = new Swiper(".carousel-content-16-9", {
             slidesPerView: 1,
             spaceBetween: 10,

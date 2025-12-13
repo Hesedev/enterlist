@@ -1,108 +1,97 @@
-import Welcome from '../pages/Welcome.js';
-import Dashboard from '../pages/Dashboard.js';
-import Error404 from '../pages/404.js';
-import UnderConstruction from '../pages/UnderConstruction.js'
-import Explore from '../pages/Explore.js';
-import Settings from '../pages/Settings.js';
-import Lists from '../pages/Lists.js';
-import ListPage from '../pages/ListPage.js'
-import ItemPage from '../pages/ItemPage.js';
-import Search from '../pages/Search.js';
-
 export const routes = [
     {
         path: '/404',
-        page: Error404,
+        page: () => import('../pages/404.js'),
         styles: ['/src/styles/error404.css'],
         requiresAuth: false
     },
     {
         path: '/under-construction',
-        page: UnderConstruction,
+        page: () => import('../pages/UnderConstruction.js'),
         styles: ['/src/styles/under-construction.css'],
         requiresAuth: false
     },
     {
         path: '/',
-        page: Welcome,
+        page: () => import('../pages/Welcome.js'),
         styles: ['/src/styles/welcome.css'],
         requiresAuth: false
     },
     {
         path: '/dashboard',
-        page: Dashboard,
+        page: () => import('../pages/Dashboard.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/dashboard.css'],
         requiresAuth: true
     },
     {
         path: '/explore',
-        page: Error404,
+        page: () => import('../pages/404.js'),
         styles: ['/src/styles/error404.css'],
         requiresAuth: true
     },
     {
         path: '/settings',
-        page: Settings,
+        page: () => import('../pages/Settings.js'),
         styles: ['/src/styles/settings.css'],
         requiresAuth: true
     },
     {
         path: '/explore/movie',
-        page: Explore,
+        page: () => import('../pages/Explore.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/explore.css'],
         requiresAuth: true,
     },
     {
         path: '/explore/tv',
-        page: Explore,
+        page: () => import('../pages/Explore.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/explore.css'],
         requiresAuth: true,
     },
     {
         path: '/explore/book',
-        page: Explore,
+        page: () => import('../pages/Explore.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/explore.css'],
         requiresAuth: true,
     },
     {
         path: '/lists',
-        page: Lists,
+        page: () => import('../pages/Lists.js'),
         styles: ['/src/styles/lists.css'],
         requiresAuth: true
     },
     {
         path: '/list/:listId',
-        page: ListPage,
+        page: () => import('../pages/ListPage.js'),
         styles: ['/src/styles/list-page.css'],
         requiresAuth: true
     },
     {
         path: '/list/:listId/item/:itemId',
-        page: ItemPage,
+        page: () => import('../pages/ItemPage.js'),
         styles: ['/src/styles/item-page.css'],
         requiresAuth: true
     },
     {
         path: '/list/:listId/search',
-        page: Error404,
+        page: () => import('../pages/404.js'),
         styles: ['/src/styles/error404.css'],
         requiresAuth: true
     },
     {
         path: '/list/:listId/search/movie',
-        page: Search,
+        page: () => import('../pages/Search.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/explore.css'],
         requiresAuth: true,
     },
     {
         path: '/list/:listId/search/tv',
-        page: Search,
+        page: () => import('../pages/Search.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/explore.css'],
         requiresAuth: true,
     },
     {
         path: '/list/:listId/search/book',
-        page: Search,
+        page: () => import('../pages/Search.js'),
         styles: ['/src/styles/swiper-bundle.min.css', '/src/styles/explore.css'],
         requiresAuth: true,
     },

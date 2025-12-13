@@ -1,4 +1,4 @@
-import { onAuthStateChangedHandler } from '../services/authService.js';
+import store from '../state/index.js';
 
 const chargeTheme = () => {
     const body = document.body;
@@ -28,7 +28,7 @@ const loadStyles = (stylesheets) => {
         head.appendChild(link);
 
         return new Promise(resolve => {
-            link.onload = resolve; // Resolver la promesa cuando el estilo esté listo
+            link.onload = resolve;
         });
     });
 
@@ -36,7 +36,7 @@ const loadStyles = (stylesheets) => {
 };
 
 const matchRoute = (path, routePath) => {
-    const [basePath, queryString] = path.split('?'); // Divide el path principal de los parámetros de consulta
+    const [basePath, queryString] = path.split('?');
     const pathSegments = basePath.split('/').filter(Boolean);
     const routeSegments = routePath.split('/').filter(Boolean);
     const params = {};
@@ -62,69 +62,71 @@ const matchRoute = (path, routePath) => {
     return { params, queryParams };
 };
 
-export const router = (routes) => {
-    // Verifica la autenticación del usuario
-    onAuthStateChangedHandler(user => {
-        const path = window.location.pathname + window.location.search;
-        let route = null;
-        let matchedRoute = null;
+export const router = async (routes) => {
+    const user = store.state.user;
+    const path = window.location.pathname + window.location.search;
+    let route = null;
+    let matchedRoute = null;
 
-        for (const r of routes) {
-            matchedRoute = matchRoute(path, r.path);
-            if (matchedRoute) {
-                route = r;
-                break;
-            }
+    for (const r of routes) {
+        matchedRoute = matchRoute(path, r.path);
+        if (matchedRoute) {
+            route = r;
+            break;
         }
+    }
 
-        if (!route) {
-            window.history.pushState(null, '', '/404');
-            route = routes.find(r => r.path === '/404');
+    if (!route) {
+        window.history.pushState(null, '', '/404');
+        route = routes.find(r => r.path === '/404');
+    }
+
+    const params = matchedRoute ? matchedRoute.params : {};
+    const queryParams = matchedRoute ? matchedRoute.queryParams : {};
+
+    if (user) {
+        if (path === '/') {
+            window.history.pushState({}, '', '/dashboard');
+            route = routes.find(r => r.path === '/dashboard');
         }
-
-        const params = matchedRoute ? matchedRoute.params : {};
-        const queryParams = matchedRoute ? matchedRoute.queryParams : {};
-
-        if (user) {
-            if (path === '/') {
-                window.history.pushState({}, '', '/dashboard');
-                route = routes.find(r => r.path === '/dashboard');
-            }
-        } else {
-            if (route.requiresAuth) {
-                window.history.pushState({}, '', '/');
-                route = routes.find(r => r.path === '/');
-            }
+    } else {
+        if (route.requiresAuth) {
+            window.history.pushState({}, '', '/');
+            route = routes.find(r => r.path === '/');
         }
+    }
 
-        /*         window.history.pushState(null, '', '/under-construction');
-                route = routes.find(r => r.path === '/under-construction'); */
+    document.querySelector("#preloader").classList.remove("hidden");
 
+    try {
+        await loadStyles(route.styles);
+        const module = await route.page();
+        const PageClass = module.default;
+        const pageInstance = new PageClass(params, queryParams);
 
-        document.querySelector("#preloader").classList.remove("hidden");
+        await Promise.all([
+            pageInstance.initialize(),
+            chargeTheme()
+        ]);
 
-        loadStyles(route.styles).then(async () => {
-            const pageInstance = new route.page(user, params, queryParams);
-            Promise.all([
-                await pageInstance.initialize(),
-                chargeTheme()
-            ]);
-            document.querySelector("#preloader").classList.add("hidden");
+        document.querySelector("#preloader").classList.add("hidden");
 
-            const dataLinks = document.querySelectorAll('[data-link]');
-            Array.from(dataLinks).find(link =>
-                window.location.pathname === new URL(link.href).pathname)?.classList.add('nav-active');
+        const dataLinks = document.querySelectorAll('[data-link]');
+        Array.from(dataLinks).find(link =>
+            window.location.pathname === new URL(link.href).pathname)?.classList.add('nav-active');
 
-            const dialogs = document.querySelectorAll("sl-dialog");
-            dialogs.forEach(d => {
-                d.addEventListener("sl-show", () => {
-                    document.body.style.overflow = "hidden";
-                })
+        const dialogs = document.querySelectorAll("sl-dialog");
+        dialogs.forEach(d => {
+            d.addEventListener("sl-show", () => {
+                document.body.style.overflow = "hidden";
+            });
 
-                d.addEventListener("sl-hide", () => {
-                    document.body.style.overflow = "auto";
-                })
-            })
+            d.addEventListener("sl-hide", () => {
+                document.body.style.overflow = "auto";
+            });
         });
-    })
+    } catch (error) {
+        console.error("Error loading page:", error);
+        document.querySelector("#preloader").classList.add("hidden");
+    }
 };

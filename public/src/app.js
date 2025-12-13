@@ -1,6 +1,7 @@
 import { router } from './router/router.js';
 import { routes } from './router/routes.js';
-import { registerIconLibrary } from ' https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.18.0/cdn/utilities/icon-library.js';
+import store from './state/index.js';
+import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.18.0/cdn/utilities/icon-library.js';
 
 registerIconLibrary('boxicons', {
     resolver: name => {
@@ -13,13 +14,6 @@ registerIconLibrary('boxicons', {
 });
 
 window.addEventListener("load", () => {
-
-    // if ('serviceWorker' in navigator) {
-    //     navigator.serviceWorker.register('/sw.js')
-    //         .then((registration) => console.log('Service Worker registrado:', registration))
-    //         .catch((error) => console.error('Error registrando el Service Worker:', error));
-    // }
-
     window.addEventListener('popstate', () => {
         router(routes);
     });
@@ -27,10 +21,19 @@ window.addEventListener("load", () => {
     window.addEventListener('hashchange', () => {
         router(routes);
     });
-})
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const d = document;
+
+    // Se suscribe a los cambios en el estado del usuario.
+    // El router se ejecutará cada vez que el estado de autenticación cambie.
+    store.subscribe('user', (user) => {
+        router(routes);
+    });
+
+    // Inicia el proceso de escucha del estado de autenticación.
+    store.dispatch('checkAuthState');
 
     d.addEventListener('click', (e) => {
         const target = e.target.closest('a[data-link]');
@@ -40,8 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             router(routes);
         }
     });
-
-    router(routes);
 
     d.body.addEventListener("error", (event) => {
         if (event.target.tagName === "IMG") {
