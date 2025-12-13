@@ -9,12 +9,13 @@ import { fetchBookDetails } from '../services/googleBooksService.js';
 import { translateMovieStatus, translateTvStatus } from '../utilities/translateStatusTMDB.js';
 import { routes } from '../router/routes.js';
 import { router } from '../router/router.js';
+import store from '../state/index.js';
 
 export default class ItemPage {
-    constructor(user, params) {
+    constructor(params) {
         this.listId = params.listId;
         this.itemId = params.itemId;
-        this.user = user;
+        this.user = store.state.user;
         this.emptyscreen = new EmptyScreen();
     }
 

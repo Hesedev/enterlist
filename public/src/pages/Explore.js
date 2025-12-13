@@ -9,16 +9,17 @@ import Serie from '../models/Serie.js';
 import ListForm from '../components/ListForm.js';
 import { fetchBookByName, fetchBookDetails } from '../services/googleBooksService.js';
 import Libro from '../models/Libro.js';
+import store from '../state/index.js';
 
 export default class Explore {
-    constructor(user, params, queryParams) {
+    constructor(params, queryParams) {
         this.type = this.getType();
         this.docTitle = "Explorar - Enterlist";
-        this.query = queryParams.q;
+        this.query = queryParams ? queryParams.q : '';
         this.header = new searchHeader(this.query, this);
         this.emptyscreen = new EmptyScreen();
-        this.user = user;
-        this.listForm = new ListForm(user, this);
+        this.user = store.state.user;
+        this.listForm = new ListForm(this.user, this);
     }
 
     async initialize() {

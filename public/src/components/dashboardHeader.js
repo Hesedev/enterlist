@@ -9,6 +9,9 @@ export default class dashboardHeader {
     }
 
     render() {
+        const user = this.user;
+        if (!user) return ''; // Si no hay usuario, no renderizar nada para evitar errores
+
         return `
             <div class="nav container">
                 <!--Logo-->
@@ -38,7 +41,7 @@ export default class dashboardHeader {
                         <span class="nav-link-title">Listas</span>
                     </a>
                     <a href="/settings" data-link class="nav-link">
-                        <img src="${this.user.photoURL}" alt="Profile Picture" class="profile-picture"
+                        <img src="${user.photoURL}" alt="Profile Picture" class="profile-picture"
                             loading="lazy">
                         <span class="nav-link-title">Tú</span>
                     </a>
