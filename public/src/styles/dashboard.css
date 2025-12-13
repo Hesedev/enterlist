@@ -1,0 +1,52 @@
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+}
+
+.heading .heading-title {
+    font-size: var(--font-size-md);
+    font-weight: 500;
+}
+
+.heading .heading-see-all-btn {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.heading .heading-see-all-btn sl-icon {
+    font-size: var(--font-size-lg);
+}
+
+.heading .heading-see-all-btn:hover {
+    color: var(--text-secondary)
+}
+
+/* ESTILOS DE CARRUSELES */
+
+.swiper {
+    margin-bottom: 2rem;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev:after {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none;
+    }
+}

@@ -1,0 +1,201 @@
+.lists-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+    min-height: fit-content;
+    z-index: 1;
+}
+
+.list-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+}
+
+.list-box-image {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    aspect-ratio: 16/9;
+    background-color: var(--border);
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.list-box .list-box-image::before {
+    background-color: var(--background-secondary);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: "";
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.list-box .list-box-image img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.list-title {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    max-width: 100%;
+    padding: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+.list-info {
+    font-size: var(--font-size-xl);
+    height: 80%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: var(--background-secondary);
+    opacity: 0.8;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.list-info span {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+}
+
+/* Modal de Filtros */
+
+.filters-container::part(base) {
+    position: fixed;
+    z-index: 100;
+}
+
+.filters-container::part(header) {
+    display: none;
+}
+
+.filters-container::part(panel) {
+    border-radius: 1.5rem 1.5rem 0 0;
+    height: fit-content;
+    max-width: 1080px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1.5rem 1.5rem 3rem;
+}
+
+/* Contenedor de botones */
+
+.filters-container .radio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+    margin: 1.5rem 0;
+}
+
+.filters-container .radio-group {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    background-color: var(--background-secondary);
+    text-align: center;
+}
+
+.filters-container .radio-group .radio-button {
+    border: 0.1rem solid var(--border);
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters-container .radio-group input {
+    display: none;
+}
+
+.filters-container .radio-group input+.radio-button {
+    border: 0.1rem solid var(--border);
+}
+
+.filters-container .radio-group input:hover+.radio-button,
+.filters-container .radio-group input:checked+.radio-button,
+.filters-container .radio-group input:focus+.radio-button {
+    background-color: var(--secondary-color);
+    color: var(--background-primary);
+}
+
+.filters-container .radio-sort-by {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filters-container .radio-filter-by {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filters-container .radio-sort-by .radio-button {
+    padding: 1rem 1.5rem;
+    border-radius: 3rem;
+}
+
+.filters-container .radio-pill {
+    display: flex;
+    align-items: center;
+}
+
+.filters-container .radio-pill label:first-of-type .radio-button {
+    border-radius: 3rem 0 0 3rem;
+}
+
+.filters-container .radio-pill label:last-of-type .radio-button {
+    border-radius: 0 3rem 3rem 0;
+}
+
+@media screen and (width > 1668px) {
+    .lists-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media screen and (width <=1068px) {
+    .lists-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (600px < width <=768px) {
+    .filters-container .radio-sort-by {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lists-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (width <=600px) {
+    .filters-container .radio-sort-by {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lists-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

@@ -1,0 +1,274 @@
+.floating-btn {
+    position: fixed;
+    bottom: 3rem;
+    right: calc((100vw - 1068px)/2);
+    z-index: 50;
+    height: 6rem;
+    aspect-ratio: 1/1;
+    box-shadow: 0px 2px 4px 0px var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: #121212;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+    transition: 0.2s ease linear;
+}
+
+.items-container-2-3 {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.items-container-1-1 {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.items-container-16-9 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+/* Modal de Filtros */
+
+.filters-container::part(base) {
+    position: fixed;
+    z-index: 100;
+}
+
+.filters-container::part(header) {
+    display: none;
+}
+
+.filters-container::part(panel) {
+    border-radius: 1.5rem 1.5rem 0 0;
+    height: fit-content;
+    max-width: 1080px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1.5rem 1.5rem 3rem;
+}
+
+/* Contenedor de botones */
+
+.filters-container .radio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+    margin: 1.5rem 0;
+}
+
+.filters-container .radio-group {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    background-color: var(--background-secondary);
+    text-align: center;
+}
+
+.filters-container .radio-group .radio-button {
+    border: 0.1rem solid var(--border);
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters-container .radio-group input {
+    display: none;
+}
+
+.filters-container .radio-group input+.radio-button {
+    border: 0.1rem solid var(--border);
+}
+
+.filters-container .radio-group input:hover+.radio-button,
+.filters-container .radio-group input:checked+.radio-button,
+.filters-container .radio-group input:focus+.radio-button {
+    background-color: var(--secondary-color);
+    color: var(--background-primary);
+}
+
+.filters-container .radio-sort-by {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filters-container .radio-filter-by {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filters-container .radio-sort-by .radio-button,
+.filters-container .radio-filter-by .radio-button {
+    padding: 1rem 1.5rem;
+    border-radius: 3rem;
+}
+
+.filters-container .radio-pill {
+    display: flex;
+    align-items: center;
+}
+
+.filters-container .radio-pill label:first-of-type .radio-button {
+    border-radius: 3rem 0 0 3rem;
+}
+
+.filters-container .radio-pill label:last-of-type .radio-button {
+    border-radius: 0 3rem 3rem 0;
+}
+
+.dialog-overview::part(body) {
+    background-color: var(--background-primary);
+    padding: 1rem;
+}
+
+.dialog-overview {
+    --width: 50rem;
+    --header-spacing: 1.5rem;
+    --body-spacing: 1.5rem;
+    --footer-spacing: 1.5rem;
+    overflow: auto;
+}
+
+.dialog-overview::part(header) {
+    border-bottom: 2px solid var(--border);
+}
+
+.dialog-overview::part(base) {
+    z-index: 100;
+}
+
+.dialog-overview::part(close-button) {
+    display: none;
+}
+
+.dialog-overview::part(title) {
+    padding: 1.5rem;
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+.dialog-overview::part(footer) {
+    border-top: 2px solid var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.dialog-overview::part(header-actions) {
+    display: none;
+}
+
+#editNameDialog::part(body) {
+    padding: 2rem 2rem;
+}
+
+#editNameBtn {
+    width: 100%;
+}
+
+#editNameBtn::part(suffix) {
+    display: none;
+}
+
+#deleteConfirmationDialog::part(base) {
+    max-width: 40rem;
+    margin: 0 auto;
+}
+
+#deleteConfirmationDialog::part(body) {
+    display: none;
+}
+
+#deleteConfirmationDialog::part(tittle) {
+    display: none;
+}
+
+#deleteBtn::part(suffix) {
+    display: none;
+}
+
+#cancelBtn::part(suffix) {
+    display: none;
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (width > 1668px) {
+    .items-container-2-3 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .items-container-1-1 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .items-container-16-9 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media screen and (width <=1068px) {
+    #app {
+        padding-bottom: 9.4rem;
+    }
+
+    .floating-btn {
+        right: 5%;
+        bottom: 2.5%;
+    }
+
+    .items-container-2-3 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .items-container-1-1 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .items-container-16-9 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (600px < width <=768px) {
+    .items-container-2-3 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .items-container-1-1 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .items-container-16-9 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (width <=600px) {
+    .items-container-2-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .items-container-1-1 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .items-container-16-9 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

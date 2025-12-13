@@ -1,0 +1,67 @@
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--background-primary);
+    opacity: 0.7;
+    z-index: 1;
+}
+
+body {
+    position: relative;
+    background-image: url('/assets/img/welcome-page-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.app {
+    min-height: calc(100svh - 6.4rem);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.app #googleBtn {
+    background: linear-gradient(var(--background-primary), var(--background-secondary));
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 1rem;
+    max-width: 100%;
+    min-width: fit-content;
+    padding: 1rem 2rem 1rem 1rem;
+    border-radius: 6rem;
+    font-size: var(--font-size-sm);
+}
+
+.app #googleBtn:hover {
+    background: linear-gradient(var(--background-secondary), var(--background-primary));
+    cursor: pointer;
+}
+
+.app #googleBtn img {
+    width: 4rem;
+    background-color: var(--background-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 0.2rem solid var(--primary-color);
+    padding: 0.75rem;
+}
+
+.app .welcome-title {
+    margin-bottom: 1rem;
+    font-size: var(--font-size-xl);
+}
+
+.app .welcome-desc {
+    margin-bottom: 2rem;
+    font-size: var(--font-size-sm);
+    text-align: center;
+    max-width: 75%;
+}
