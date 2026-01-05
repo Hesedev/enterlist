@@ -1,14 +1,5 @@
 import store from '../state/index.js';
-
-const chargeTheme = () => {
-    const body = document.body;
-    const logo = document.querySelector(".logo img");
-    const actualTheme = localStorage.getItem('theme') || 'dark';
-
-    body.style.display = "block";
-    body.setAttribute('data-theme', actualTheme);
-    (logo) ? logo.src = `/assets/logos/${actualTheme}-theme/enterlist-imagotipo.png` : "";
-}
+import { loadInitialTheme } from '../utilities/themeManager.js';
 
 const loadStyles = (stylesheets) => {
     const links = document.querySelectorAll('.dynamic-style');
@@ -106,7 +97,7 @@ export const router = async (routes) => {
 
         await Promise.all([
             pageInstance.initialize(),
-            chargeTheme()
+            loadInitialTheme()
         ]);
 
         document.querySelector("#preloader").classList.add("hidden");

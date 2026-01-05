@@ -1,6 +1,7 @@
 import { logout } from '../services/authService.js';
 import dashboardHeader from '../components/dashboardHeader.js';
 import store from '../state/index.js';
+import { applyTheme } from '../utilities/themeManager.js';
 
 export default class Settings {
     constructor() {
@@ -54,25 +55,12 @@ export default class Settings {
     initEvents() {
         try {
             const btnLogout = document.querySelector("#logoutBtn");
-            const body = document.body;
-            const darkThemeToggle = document.querySelector('sl-radio-button[value="dark"]');
-            const lightThemeToggle = document.querySelector('sl-radio-button[value="light"]');
+            const themeToggle = document.querySelector("#themeToggle");
 
-            darkThemeToggle.addEventListener('sl-focus', () => {
-                const theme = darkThemeToggle.getAttribute("value");
-                const logo = document.querySelector(".logo img");
-                (logo) ? logo.src = `/assets/logos/${theme}-theme/enterlist-imagotipo.png` : "";
-                body.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-            })
-
-            lightThemeToggle.addEventListener('sl-focus', () => {
-                const theme = lightThemeToggle.getAttribute("value");
-                const logo = document.querySelector(".logo img");
-                (logo) ? logo.src = `/assets/logos/${theme}-theme/enterlist-imagotipo.png` : "";
-                body.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-            })
+            themeToggle.addEventListener('sl-change', (event) => {
+                const newTheme = event.target.value;
+                applyTheme(newTheme);
+            });
 
             btnLogout.addEventListener("click", async () => {
                 try {
