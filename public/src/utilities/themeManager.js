@@ -11,7 +11,10 @@ export function applyTheme(theme) {
     const logo = document.querySelector(".logo img");
 
     localStorage.setItem('theme', theme);
-    body.setAttribute('data-theme', theme);
+
+    if (body) {
+        body.setAttribute('data-theme', theme);
+    }
 
     if (logo) {
         logo.src = `/assets/logos/${theme}-theme/enterlist-imagotipo.png`;

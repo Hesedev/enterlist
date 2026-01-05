@@ -12,6 +12,10 @@ export default class Settings {
     }
 
     render() {
+        if (!this.user) {
+            return ''; // No renderizar nada si el usuario no está cargado todavía
+        }
+
         return `
             <div class="settings-container">
                 <div class="settings-group">
